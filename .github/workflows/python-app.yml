@@ -64,7 +64,7 @@ jobs:
         git config --global user.email "ci@github.com"
         git config --global user.name "GitHub Actions"
 
-        git clone https://$HF_TOKEN@huggingface.co/spaces/MarcBo-eng/P05_openc.git hf-space
+        git clone https://oauth2:$HF_TOKEN@huggingface.co/spaces/MarcBo-eng/P05_openc.git hf-space
 
         rsync -av --delete \
           --exclude='.git' \
@@ -78,5 +78,5 @@ jobs:
         cd hf-space
         git add .
         git commit -m "Deploy ${{ github.ref_name }}" || echo "Nothing to commit"
-        git pull --rebase https://$HF_TOKEN@huggingface.co/spaces/MarcBo-eng/P05_openc.git main || true
-        git push https://$HF_TOKEN@huggingface.co/spaces/MarcBo-eng/P05_openc.git main
+        git pull --rebase https://oauth2:$HF_TOKEN@huggingface.co/spaces/MarcBo-eng/P05_openc.git main || true
+        git push https://oauth2:$HF_TOKEN@huggingface.co/spaces/MarcBo-eng/P05_openc.git main
