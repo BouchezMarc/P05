@@ -73,6 +73,7 @@ jobs:
           --exclude='.pytest_cache' \
           --exclude='htmlcov' \
           --exclude='.coverage' \
+          # --exclude='hf-space/' \
           ./ hf-space/ || true
 
         # Ajouter la configuration au fichier README.md sans effacer le contenu existant
@@ -81,5 +82,5 @@ jobs:
         cd hf-space
         git add .
         git commit -m "Deploy ${{ github.ref_name }}" || echo "Nothing to commit"
-        git pull --rebase https://oauth2:$HF_TOKEN@huggingface.co/spaces/MarcBo-eng/P05_openc.git main || true
+        # git pull --rebase https://oauth2:$HF_TOKEN@huggingface.co/spaces/MarcBo-eng/P05_openc.git main || true
         git push https://oauth2:$HF_TOKEN@huggingface.co/spaces/MarcBo-eng/P05_openc.git main
