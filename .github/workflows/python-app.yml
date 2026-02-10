@@ -60,19 +60,17 @@ jobs:
     - name: Push to Hugging Face Space
       env:
         HF_TOKEN: ${{ secrets.HF_TOKEN }}
-        REPO_TOKEN: ${{ secrets.REPO_TOKEN }}
       run: |
         git config --global user.email "ci@github.com"
         git config --global user.name "GitHub Actions"
 
-        git clone https://$HF_TOKEN@huggingface.co/spaces/MarcBo-eng/P05_openc
+        git clone https://$HF_TOKEN@huggingface.co/spaces/MarcBo-eng/P05_openc.git hf-space
 
         rsync -av --delete \
           --exclude='.git' \
           ./ hf-space/
 
         cd hf-space
-        git checkout -b main
         git add .
-        git commit -m "Deploy ${{ github.ref_name }}"
-        git push https://x-access-token:$REPO_TOKEN@github.com/BouchezMarc/P05.git main
+        git commit -m "Deploy ${{ github.ref_name }}" || echo "Nothing to commit"
+        git push https://$HF_TOKEN@huggingface.co/spaces/MarcBo-eng/P05_openc.git main
