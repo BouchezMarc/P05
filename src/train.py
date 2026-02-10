@@ -1,7 +1,4 @@
-import numpy as np
-import pandas as pd
-
-from sklearn.preprocessing import OneHotEncoder, FunctionTransformer 
+from sklearn.preprocessing import OneHotEncoder, FunctionTransformer
 from sklearn.compose import ColumnTransformer
 from sklearn.pipeline import Pipeline
 from sklearn.linear_model import LogisticRegression
@@ -10,7 +7,7 @@ from sklearn.model_selection import StratifiedKFold, train_test_split
 from pathlib import Path
 import joblib
 
-from .utils import create_bd_base,query_init_df,insert_train_data
+from .utils import create_bd_base, query_init_df, insert_train_data
 
 
 # Transformations -----------------------------------------------------------
@@ -18,14 +15,17 @@ from .utils import create_bd_base,query_init_df,insert_train_data
 binary_map = {
     'genre': {'F': 0, 'M': 1},
     'heure_supplementaires': {'Non': 0, 'Oui': 1},
-    #'a_quitte_l_entreprise': {'Non': 0, 'Oui': 1}
+    # 'a_quitte_l_entreprise': {'Non': 0, 'Oui': 1}
 }
+
 
 def transform_binary(X):
     return X.replace(binary_map)
 
+
 def transform_percent(X):
-    return X.iloc[:, 0].str.replace(' %','',regex=False).astype(int).to_frame()
+    return X.iloc[:, 0].str.replace(' %', '', regex=False).astype(int).to_frame()
+
 
 def transform_freq(X):
     return X.replace({'Aucun': 0, 'Occasionnel': 1, 'Frequent': 2}).infer_objects()
@@ -46,8 +46,8 @@ freq_transformer = FunctionTransformer(
 )
 # Colums ---------------------------------------------------------
 
-cat_cols = ['statut_marital','departement','poste', 'domaine_etude']
-binary_cols = ['genre','heure_supplementaires']#,'a_quitte_l_entreprise']
+cat_cols = ['statut_marital', 'departement','poste', 'domaine_etude']
+binary_cols = ['genre', 'heure_supplementaires'] # ,'a_quitte_l_entreprise']
 percent_col = ['augementation_salaire_precedente']
 freq_col = ['frequence_deplacement']
 
@@ -62,9 +62,8 @@ preprocessor = ColumnTransformer(
     remainder='passthrough'
 )
 
-
-
 # Class Pipeline --------------------------------------------------
+
 
 class ModelHandler:
     def __init__(self, model, stratify=True, preprocessor=None, n_splits=5):
@@ -90,11 +89,11 @@ class ModelHandler:
 
     @staticmethod
     def transform_binary(X):
-        binary_map = {'genre': {'F': 0, 'M': 1},'heure_supplementaires': {'Non': 0, 'Oui': 1},}
+        binary_map = {'genre': {'F': 0, 'M': 1}, 'heure_supplementaires': {'Non': 0, 'Oui': 1},}
         return X.replace(binary_map)    
     @staticmethod
     def transform_percent(X):
-        return X.iloc[:, 0].str.replace(' %','',regex=False).astype(int).to_frame()
+        return X.iloc[:, 0].str.replace(' %', '', regex=False).astype(int).to_frame()
     @staticmethod
     def transform_freq(X):
         return X.replace({'Aucun': 0, 'Occasionnel': 1, 'Frequent': 2}).infer_objects()
@@ -148,7 +147,7 @@ class ModelHandler:
         for train_idx, val_idx in skf.split(X_train, y_train):
             # Utilisation de iloc pour indexer X_train et y_train correctement
             X_train_fold = X_train.iloc[train_idx]  # .iloc pour DataFrame
-            #X_val_fold = X_train.iloc[val_idx]
+            # X_val_fold = X_train.iloc[val_idx]
             y_train_fold = y_train.iloc[train_idx]  # .iloc pour Series
             #y_val_fold = y_train.iloc[val_idx]
 
@@ -202,7 +201,7 @@ if __name__ == "__main__":
     df = query_init_df()
 
     df['a_quitte_l_entreprise'] = df['a_quitte_l_entreprise'].apply({'Non': 0, 'Oui': 1}.get)
-    #print (df)
+    # print (df)
 
     y = df['a_quitte_l_entreprise']
     id_employee = df['id_employee']
@@ -279,4 +278,3 @@ if __name__ == "__main__":
 
 else:
     print("launched indirectly")
-

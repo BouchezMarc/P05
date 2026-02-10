@@ -1,9 +1,10 @@
-from sqlalchemy import Column, Integer, String, DateTime, Float, Text, Boolean
+from sqlalchemy import Column, Integer, String, Float, Boolean
 from sqlalchemy.sql import func
 
-from .bdd import Base,load_dotenv
+from .bdd import Base
 
 # -----------------------------------------------------------------
+
 class Eval(Base):
     """
     Table eval contenent les données du csv eval
@@ -32,7 +33,10 @@ class Eval(Base):
         return f"<{self.__class__.__name__}({values})>"
     
 # -----------------------------------------------------------------
+
+
 class Sirh(Base):
+
     """
     Table sirh contenent les données du csv sirh
     """
@@ -61,6 +65,8 @@ class Sirh(Base):
         )
         return f"<{self.__class__.__name__}({values})>"
 # -----------------------------------------------------------------
+
+
 class Sondage(Base):
     """
     Table sondage contenent les données du csv sondage
@@ -90,7 +96,8 @@ class Sondage(Base):
         )
         return f"<{self.__class__.__name__}({values})>"
 # -----------------------------------------------------------------
-    
+
+
 class ViewRh(Base):
     """
     View basée sur les tables sirh, eval, sondage
@@ -153,31 +160,11 @@ class ViewRh(Base):
             for c in self.__table__.columns
             if c.name not in self.EXCLUDED_COLUMNS
         )
-        return f"<{self.__class__.__name__}({values})>"
-    
+        return f"<{self.__class__.__name__}({values})>"    
+
 # -----------------------------------------------------------------
-'''
-class LogML(Base):
-    """
-    Table contenant les infos sur la version du ML
-    """
-    __tablename__ = "log_ml"
 
-    id_ml = Column(Integer, primary_key=True, index=True)
-    version_ml = Column(Integer, nullable=False)
-    date_ml = Column(String, nullable=False, server_default=func.now())
 
-    EXCLUDED_COLUMNS = {}
-
-    def __repr__(self):
-        values = ", ".join(
-            f"{c.name}={getattr(self, c.name)!r}"
-            for c in self.__table__.columns
-            if c.name not in self.EXCLUDED_COLUMNS
-        )
-        return f"<{self.__class__.__name__}({values})>"
-'''
-# -----------------------------------------------------------------    
 class Pred(Base):
     """
     Table contenant les prédictions
@@ -197,8 +184,11 @@ class Pred(Base):
             if c.name not in self.EXCLUDED_COLUMNS
         )
         return f"<{self.__class__.__name__}({values})>"
-# -----------------------------------------------------------------    
+# ----------------------------------------------------------------- 
+
+
 class TInputs(Base):
+
     """
     Table contenant les infos sur les inputs et le dataset de test après split
     """
@@ -231,13 +221,13 @@ class TInputs(Base):
     frequence_deplacement = Column(String, nullable=False, server_default=func.now())
     annees_depuis_la_derniere_promotion = Column(Integer, nullable=False)
     annee_experience_totale = Column(Integer, nullable=False)
-    #nombre_heures_travailless = Column(Integer, nullable=False)
-    #nombre_employee_s_responsabilite = Column(Integer, nullable=False)
-    #ayant_enfants = Column(String, nullable=False, server_default=func.now())
-    #code_sondage = Column(Integer, nullable=False)
-    #eval_number = Column(String, nullable=False, server_default=func.now())
-    #note_evaluation_actuelle = Column(Integer, nullable=False)
-    #annes_s_responsable_actuel = Column(Integer, nullable=False)
+    # nombre_heures_travailless = Column(Integer, nullable=False)
+    # nombre_employee_s_responsabilite = Column(Integer, nullable=False)
+    # ayant_enfants = Column(String, nullable=False, server_default=func.now())
+    # code_sondage = Column(Integer, nullable=False)
+    # eval_number = Column(String, nullable=False, server_default=func.now())
+    # note_evaluation_actuelle = Column(Integer, nullable=False)
+    # annes_s_responsable_actuel = Column(Integer, nullable=False)
     niveau_hierarchique_poste = Column(Integer, nullable=False)
 
     EXCLUDED_COLUMNS = {}
@@ -294,18 +284,19 @@ class ViewInputs(Base):
     salaire_vs_niveau = Column(Float, nullable=False)
 
     EXCLUDED_COLUMNS = {
-        #"nombre_heures_travailless",
-        #"nombre_employee_sous_responsabilite",
-        #"ayant_enfants",
-        #"annees_dans_le_poste_actuel",
-        #"note_evaluation_actuelle",        
-        #"code_sondage",
-        #"eval_number",
-        #"satisfaction_employee_nature_travail",
-        #"satisfaction_employee_equipe",
-        #"satisfaction_employee_equilibre_pro_perso",
-        #"satisfaction_employee_environnement",
+        # "nombre_heures_travailless",
+        # "nombre_employee_sous_responsabilite",
+        # "ayant_enfants",
+        # "annees_dans_le_poste_actuel",
+        # "note_evaluation_actuelle",        
+        # "code_sondage",
+        # "eval_number",
+        # "satisfaction_employee_nature_travail",
+        # "satisfaction_employee_equipe",
+        # "satisfaction_employee_equilibre_pro_perso",
+        # "satisfaction_employee_environnement",
         }
+    
     def __repr__(self):
         values = ", ".join(
             f"{c.name}={getattr(self, c.name)!r}"

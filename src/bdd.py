@@ -1,10 +1,9 @@
 import os
-from typing import AsyncGenerator, Generator
+from typing import AsyncGenerator
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine, async_sessionmaker
-from sqlalchemy.orm import declarative_base, sessionmaker, Session
-from sqlalchemy.pool import NullPool
+from sqlalchemy.orm import declarative_base, sessionmaker
 
 # Load environment variables from .env file
 load_dotenv()
@@ -13,19 +12,15 @@ load_dotenv()
 # Format: postgresql+asyncpg://user:password@host:port/dbname
 DATABASE_URL = os.getenv(
     "DATABASE_URL",
-    #"postgresql+asyncpg://postgres:test@localhost:5432/openc"
+    # "postgresql+asyncpg://postgres:test@localhost:5432/openc"
 )
 
 # Synchronous database URL (for non-async contexts)
 # Convertir de async (asyncpg) à sync (psycopg2)
 SYNC_DATABASE_URL = os.getenv(
     "DATABASE_URL",
-    #"postgresql+asyncpg://postgres:test@localhost:5432/openc"
+    # "postgresql+asyncpg://postgres:test@localhost:5432/openc"
 ).replace("postgresql+asyncpg://", "postgresql://", 1)
-
-
-
-
 
 # Create async engine with connection pooling
 engine = create_async_engine(
@@ -97,3 +92,4 @@ async def close_db() -> None:
     Call this on application shutdown.
     """
     await engine.dispose()
+
