@@ -156,7 +156,7 @@ def insert_data_into_db(df_test: pd.DataFrame, db):
     if inputs:
         sample = inputs[0].__dict__.copy()
         sample.pop('_sa_instance_state', None)
-        #print(f"[DEBUG] Sample payload: {sample}")
+        # print(f"[DEBUG] Sample payload: {sample}")
 
     # Insérer toutes les lignes dans la base de données
     try:
@@ -167,7 +167,8 @@ def insert_data_into_db(df_test: pd.DataFrame, db):
         print(f"[ERROR] Flush error: {e}")
         raise
 
-# Fonction principale pour insérer les données 
+# Fonction principale pour insérer les données
+
 def insert_train_data(df_test: pd.DataFrame):
     db = SessionLocal()
     try:
