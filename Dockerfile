@@ -13,7 +13,11 @@ RUN apt-get update && apt-get install -y \
 
 # Installer les dépendances Python
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+COPY pyproject.toml .
+COPY uv.lock .
+# RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install uv
+RUN uv sync
 
 # Copier le code
 COPY . .

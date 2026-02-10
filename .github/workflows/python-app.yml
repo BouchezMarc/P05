@@ -22,7 +22,9 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install -r requirements.txt
+        pip install uv 
+        uv sync
+      #  pip install -r requirements.txt
 
       # Linting désactivé
       # - name: Run linting with flake8
@@ -34,13 +36,13 @@ jobs:
         echo "DATABASE_URL=${{ secrets.DATABASE_URL }}" >> $GITHUB_ENV
         
     - name: Run tests
-      run: |
-        pip install pytest
-        pytest test/
+      run: |        
+        uv run pytest test/
+      # pip install pytest
 
     - name: Train model (test run)
       run: |
-        python src/train.py --epochs 1
+        uv run python src/train.py --epochs 1
 
   deploy:
     needs: test
