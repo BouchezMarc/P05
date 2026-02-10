@@ -1,20 +1,19 @@
 import pandas as pd
-from sqlalchemy import func, text
+from sqlalchemy import text
 from sqlalchemy.exc import SQLAlchemyError
 
-from .models import ViewRh,Sondage,Sirh,Eval,Pred,TInputs#,LogSplit,LogML
+from .models import ViewRh, TInputs
 from .bdd import SessionLocal
 
 
 # All Utils Functions
 print("utils")
 
-
 # -------------------------------------------------------
 # Files Paths
 
 CREATE_TABLE_SQL_PATH = "./sql/create_tables_p5_rh.sql"
-#CREATE_VIEW = "./sql/p5_view_rh.sql"
+# CREATE_VIEW = "./sql/p5_view_rh.sql"
 INSERT_FILES = {
     "sirh": "./sql/extrait_sirh_insert.csv",
     "eval": "./sql/extrait_eval_insert.csv",
@@ -46,6 +45,7 @@ def table_is_empty(db, table_name):
 # =========================
 # Init de Base des Tables
 # =========================
+
 def create_bd_base():
     #print("🔌 Test connexion à la base...")
     db = SessionLocal()
@@ -81,6 +81,7 @@ def create_bd_base():
 
 # -------------------------------------------------------
 # Lecture du Dataset ------------------------------------
+
 def query_init_df():    
     try:
         # Get session
@@ -116,6 +117,7 @@ def query_init_df():
 # Ecriture du Dataset après le split
 
 # Fonction pour insérer un DataFrame dans la table log_split
+
 def insert_data_into_db(df_test: pd.DataFrame, db):
     inputs = []
 
@@ -144,7 +146,7 @@ def insert_data_into_db(df_test: pd.DataFrame, db):
                 inputs_data[col] = row[col]
 
         # Ajouter l'id du modèle dans chaque entrée
-        #log_split_data["id_ml"] = id_ml
+        # log_split_data["id_ml"] = id_ml
 
         # Créer un objet LogSplit avec les données dynamiques
         input = TInputs(**inputs_data)
@@ -152,7 +154,7 @@ def insert_data_into_db(df_test: pd.DataFrame, db):
         # Ajouter l'objet à la liste
         inputs.append(input)
 
-    #print(f"[INFO] Ready to insert {len(inputs)} rows")
+    # print(f"[INFO] Ready to insert {len(inputs)} rows")
     if inputs:
         sample = inputs[0].__dict__.copy()
         sample.pop('_sa_instance_state', None)
