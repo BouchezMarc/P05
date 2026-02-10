@@ -72,8 +72,7 @@ jobs:
           --exclude='*.pyc' \
           --exclude='.pytest_cache' \
           --exclude='htmlcov' \
-          --exclude='.coverage' \
-          --exclude='hf-space/' \
+          --exclude='.coverage' \          
           ./ hf-space/ || true
 
         # Ajouter la configuration au fichier README.md sans effacer le contenu existant
