@@ -68,9 +68,15 @@ jobs:
 
         rsync -av --delete \
           --exclude='.git' \
+          --exclude='__pycache__' \
+          --exclude='*.pyc' \
+          --exclude='.pytest_cache' \
+          --exclude='htmlcov' \
+          --exclude='.coverage' \
           ./ hf-space/
 
         cd hf-space
         git add .
         git commit -m "Deploy ${{ github.ref_name }}" || echo "Nothing to commit"
+        git pull --rebase https://$HF_TOKEN@huggingface.co/spaces/MarcBo-eng/P05_openc.git main || true
         git push https://$HF_TOKEN@huggingface.co/spaces/MarcBo-eng/P05_openc.git main
