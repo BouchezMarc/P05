@@ -29,7 +29,8 @@ jobs:
       # Linting désactivé
     - name: Run linting with flake8
       run: |
-        flake8 .
+        pip install flake8
+        flake8 src/
 
     - name: Set up environment variables
       run: |
