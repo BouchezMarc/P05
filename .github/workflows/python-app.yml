@@ -73,7 +73,7 @@ jobs:
           --exclude='.pytest_cache' \
           --exclude='htmlcov' \
           --exclude='.coverage' \
-          ./ hf-space/
+          ./ hf-space/ || true
 
         cd hf-space
         git add .
