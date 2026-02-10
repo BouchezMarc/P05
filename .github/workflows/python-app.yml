@@ -42,7 +42,7 @@ jobs:
 
     - name: Train model (test run)
       run: |
-        uv run python -m src/train.py --epochs 1
+        uv run python -m src/train --epochs 1
 
   deploy:
     needs: test
