@@ -77,7 +77,7 @@ jobs:
           ./ hf-space/ || true
 
         # Ajouter la configuration au fichier README.md sans effacer le contenu existant
-        echo -e "\n---\ntitle: \"P05 Openc\"\nemoji: \"📉\"\ncolorFrom: \"red\"\ncolorTo: \"indigo\"\nsdk: docker\nsdk_version: \"3.0\"\npython_version: \"3.10\"\napp_file: main.py\npinned: false\nshort_description: Projet05_OpenC\n---\n" | cat - hf-space/README.md > hf-space/README.md.tmp && mv hf-space/README.md.tmp hf-space/README.md
+        echo -e "\n---\ntitle: \"P05 Openc\"\nemoji: \"📉\"\ncolorFrom: \"red\"\ncolorTo: \"indigo\"\nsdk: docker\nsdk_version: \"3.0\"\npinned: false\nshort_description: Projet05_OpenC\n---\n" | cat - hf-space/README.md > hf-space/README.md.tmp && mv hf-space/README.md.tmp hf-space/README.md
 
         cd hf-space
         git add .
