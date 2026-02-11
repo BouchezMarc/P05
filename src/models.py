@@ -3,7 +3,9 @@ from sqlalchemy.sql import func
 
 from .bdd import Base
 
+
 # -----------------------------------------------------------------
+
 
 class Eval(Base):
     """
@@ -12,7 +14,9 @@ class Eval(Base):
     __tablename__ = "eval"
 
     eval_number = Column(String(10), primary_key=True, index=True)
-    satisfaction_employee_environnement = Column(Integer, nullable=False, index=True)
+    satisfaction_employee_environnement = Column(
+        Integer, nullable=False, index=True
+    )
     note_evaluation_precedente = Column(Integer, nullable=False)
     niveau_hierarchique_poste = Column(Integer, nullable=False)
     satisfaction_employee_nature_travail = Column(Integer, nullable=False)
@@ -20,7 +24,9 @@ class Eval(Base):
     satisfaction_employee_equilibre_pro_perso = Column(Integer, nullable=False)
     note_evaluation_actuelle = Column(Integer, nullable=False)
     heure_supplementaires = Column(String(5), nullable=False)
-    augementation_salaire_precedente = Column(String(5), primary_key=True, index=True)
+    augementation_salaire_precedente = Column(
+        String(5), primary_key=True, index=True
+    )
 
     EXCLUDED_COLUMNS = {}
 
@@ -31,7 +37,7 @@ class Eval(Base):
             if c.name not in self.EXCLUDED_COLUMNS
         )
         return f"<{self.__class__.__name__}({values})>"
-    
+
 # -----------------------------------------------------------------
 
 
@@ -64,6 +70,8 @@ class Sirh(Base):
             if c.name not in self.EXCLUDED_COLUMNS
         )
         return f"<{self.__class__.__name__}({values})>"
+
+
 # -----------------------------------------------------------------
 
 
@@ -95,6 +103,8 @@ class Sondage(Base):
             if c.name not in self.EXCLUDED_COLUMNS
         )
         return f"<{self.__class__.__name__}({values})>"
+
+
 # -----------------------------------------------------------------
 
 
@@ -145,14 +155,14 @@ class ViewRh(Base):
         "nombre_employee_sous_responsabilite",
         "ayant_enfants",
         "annees_dans_le_poste_actuel",
-        "note_evaluation_actuelle",        
+        "note_evaluation_actuelle",
         "code_sondage",
         "eval_number",
         "satisfaction_employee_nature_travail",
         "satisfaction_employee_equipe",
         "satisfaction_employee_equilibre_pro_perso",
         "satisfaction_employee_environnement",
-        }
+    }
 
     def __repr__(self):
         values = ", ".join(
@@ -160,7 +170,8 @@ class ViewRh(Base):
             for c in self.__table__.columns
             if c.name not in self.EXCLUDED_COLUMNS
         )
-        return f"<{self.__class__.__name__}({values})>"    
+        return f"<{self.__class__.__name__}({values})>"
+
 
 # -----------------------------------------------------------------
 
@@ -173,8 +184,9 @@ class Pred(Base):
 
     id_pred = Column(Integer, primary_key=True, index=True)
     id_input = Column(Integer, nullable=False)
-    result_pred = Column(Boolean, nullable=False)  # Boolean car la colonne DB est de type boolean
-   
+    # Boolean car la colonne DB est de type boolean.
+    result_pred = Column(Boolean, nullable=False)
+
     EXCLUDED_COLUMNS = {}
 
     def __repr__(self):
@@ -184,11 +196,12 @@ class Pred(Base):
             if c.name not in self.EXCLUDED_COLUMNS
         )
         return f"<{self.__class__.__name__}({values})>"
-# ----------------------------------------------------------------- 
+
+
+# -----------------------------------------------------------------
 
 
 class TInputs(Base):
-
     """
     Table contenant les infos sur les inputs et le dataset de test après split
     """
@@ -196,7 +209,7 @@ class TInputs(Base):
 
     id_input = Column(Integer, primary_key=True, index=True)
     id_employee = Column(Integer, nullable=True)
-    age = Column(Integer, nullable=False) 
+    age = Column(Integer, nullable=False)
     genre = Column(String, nullable=False, server_default=func.now())
     revenu_mensuel = Column(Integer, nullable=False)
     statut_marital = Column(String, nullable=False, server_default=func.now())
@@ -210,15 +223,25 @@ class TInputs(Base):
     satisfaction_employee_nature_travail = Column(Integer, nullable=False)
     satisfaction_employee_equipe = Column(Integer, nullable=False)
     satisfaction_employee_equilibre_pro_perso = Column(Integer, nullable=False)
-    heure_supplementaires  = Column(String, nullable=False, server_default=func.now())
-    augementation_salaire_precedente = Column(String, nullable=False, server_default=func.now())
-    a_quitte_l_entreprise = Column(String, nullable=True, server_default=func.now())
+    heure_supplementaires = Column(
+        String, nullable=False, server_default=func.now()
+    )
+    augementation_salaire_precedente = Column(
+        String, nullable=False, server_default=func.now()
+    )
+    a_quitte_l_entreprise = Column(
+        String, nullable=True, server_default=func.now()
+    )
     nombre_participation_pee = Column(Integer, nullable=False)
     nb_formations_suivies = Column(Integer, nullable=False)
     distance_domicile_travail = Column(Integer, nullable=False)
-    niveau_education  = Column(Integer, nullable=False)
-    domaine_etude = Column(String, nullable=False, server_default=func.now())
-    frequence_deplacement = Column(String, nullable=False, server_default=func.now())
+    niveau_education = Column(Integer, nullable=False)
+    domaine_etude = Column(
+        String, nullable=False, server_default=func.now()
+    )
+    frequence_deplacement = Column(
+        String, nullable=False, server_default=func.now()
+    )
     annees_depuis_la_derniere_promotion = Column(Integer, nullable=False)
     annee_experience_totale = Column(Integer, nullable=False)
     # nombre_heures_travailless = Column(Integer, nullable=False)
@@ -239,7 +262,8 @@ class TInputs(Base):
             if c.name not in self.EXCLUDED_COLUMNS
         )
         return f"<{self.__class__.__name__}({values})>"
-    
+
+
 
 class ViewInputs(Base):
     """
@@ -288,15 +312,15 @@ class ViewInputs(Base):
         # "nombre_employee_sous_responsabilite",
         # "ayant_enfants",
         # "annees_dans_le_poste_actuel",
-        # "note_evaluation_actuelle",        
+        # "note_evaluation_actuelle",
         # "code_sondage",
         # "eval_number",
         # "satisfaction_employee_nature_travail",
         # "satisfaction_employee_equipe",
         # "satisfaction_employee_equilibre_pro_perso",
         # "satisfaction_employee_environnement",
-        }
-    
+    }
+
     def __repr__(self):
         values = ", ".join(
             f"{c.name}={getattr(self, c.name)!r}"

@@ -1,4 +1,8 @@
-from .train import transform_binary, transform_percent, transform_freq
+from .train import (
+    transform_binary,
+    transform_freq,
+    transform_percent,
+)
 
 import joblib
 
@@ -16,5 +20,5 @@ def load_model():
     return joblib.load(model_path)
 
 
-def predict(model,X): 
+def predict(model, X):
     return model.predict(X)[0]
