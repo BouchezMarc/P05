@@ -44,7 +44,6 @@ def table_is_empty(db, table_name):
     return count == 0
 
 
-
 # =========================
 # Init de Base des Tables
 # =========================
@@ -82,7 +81,6 @@ def create_bd_base():
         db.close()
 
 
-
 # -------------------------------------------------------
 # Lecture du Dataset ------------------------------------
 def query_init_df():
@@ -117,7 +115,6 @@ def query_init_df():
     return df
 
 
-
 # -------------------------------------------------------
 # Ecriture du Dataset après le split
 
@@ -136,7 +133,9 @@ def insert_data_into_db(df_test: pd.DataFrame, db):
         and c.name not in {"id_input"}
     }
     print(f"🔍 Colonnes autorisées pour Inputs: {sorted(allowed_cols)}")
-    print(f"🔍 Colonnes df entrantes: {sorted(df_test.columns.tolist())}")
+    print(
+        f"🔍 Colonnes df entrantes: {sorted(df_test.columns.tolist())}"
+    )
 
     missing_required = sorted(required_cols - set(df_test.columns))
     if missing_required:
@@ -178,7 +177,6 @@ def insert_data_into_db(df_test: pd.DataFrame, db):
         db.rollback()
         print(f"[ERROR] Flush error: {e}")
         raise
-
 
 
 # Fonction principale pour insérer les données

@@ -58,7 +58,7 @@ class InputInsertRequest(BaseModel):
     satisfaction_employee_equilibre_pro_perso: int = 3
     heure_supplementaires: str = "Oui"
     augementation_salaire_precedente: str = "15 %"
-    a_quitte_l_entreprise: Optional[str] = None  # Optionnel
+    a_quitte_l_entreprise: Optional[str] = "Non"  # Optionnel
     nombre_participation_pee: int = 2
     nb_formations_suivies: int = 3
     distance_domicile_travail: int = 10
