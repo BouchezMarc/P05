@@ -264,7 +264,6 @@ class TInputs(Base):
         return f"<{self.__class__.__name__}({values})>"
 
 
-
 class ViewInputs(Base):
     """
     View basée sur la table inputs
