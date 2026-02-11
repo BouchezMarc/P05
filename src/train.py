@@ -19,7 +19,6 @@ binary_map = {
 }
 
 
-
 def transform_binary(X):
     return X.replace(binary_map)
 
@@ -37,7 +36,6 @@ def transform_freq(X):
     return X.replace(
         {"Aucun": 0, "Occasionnel": 1, "Frequent": 2}
     ).infer_objects()
-
 
 
 binary_transformer = FunctionTransformer(
@@ -226,7 +224,6 @@ class ModelHandler:
     def predict_proba(self, X):
         """ Faire des prédictions probabilistes """
         return self.pipeline.predict_proba(X)
-
 
 
 # ---------------------------------------------------------------------------------------------------

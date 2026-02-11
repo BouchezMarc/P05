@@ -96,4 +96,3 @@ async def close_db() -> None:
     Call this on application shutdown.
     """
     await engine.dispose()
-
