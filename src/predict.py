@@ -9,7 +9,7 @@ import joblib
 
 def load_model():
     model_path = "./model/ml_model.joblib"
-    # Add functions to __main__ module 
+    # Add functions to __main__ module
     # so pickle can find them during unpickling
     import sys
     main_module = sys.modules["__main__"]
