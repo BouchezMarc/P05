@@ -1,6 +1,7 @@
 # Projet05 - Système de Prédiction RH avec API FastAPI
 
-Un système complet de prédiction machine learning pour l'analyse des données RH, suite du Projet 04 : " cause d'attrition dans une ESN", avec une API REST déployée via Docker.
+Un système complet de prédiction machine learning pour l'analyse des données RH (suite du Projet 04
+"Cause(s) d'attrition dans une ESN"), avec une API REST déployée via Docker.
 
 ## 🎯 Objectif
 
@@ -205,17 +206,13 @@ PYTHONUNBUFFERED=1
 - `genre` : M (1) / F (0)
 - `heure_supplementaires` : Oui (1) / Non (0)
 
-**Numériques**:
-- `age` : Âge de l'employé
-- `revenu_mensuel` : Salaire mensuel
-
 **Traitements spéciaux**:
 - Transformation pourcentages (% converti en entier)
 - Transformation fréquences (Aucun→0, Occasionnel→1, Frequent→2)
 
 ## 📝 Endpoints API
 
-### POST `/predict`
+### POST `/predict/insert`
 Obtenir une prédiction pour un employé
 
 **Request**:
@@ -234,8 +231,10 @@ Obtenir une prédiction pour un employé
 **Response**:
 ```json
 {
-  "prediction": 1,
-  "probability": 0.72
+  "message": "Input créé et prédiction effectuée avec succès",
+  "id_input": 10665,
+  "id_employee": 999,
+  "prediction": 0
 }
 ```
 
