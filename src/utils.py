@@ -32,7 +32,6 @@ def execute_sql_file(conn, file_path):
     conn.commit()
 
 
-
 # -------------------------------------------------------
 # Select pour vérifier si la table contient du data
 def table_is_empty(db, table_name):
@@ -71,7 +70,6 @@ def create_bd_base():
 
             else:
                 print(f"📊 Table '{table}' déjà remplie")
-
 
     except Exception as e:
         db.rollback()
