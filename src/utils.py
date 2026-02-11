@@ -87,7 +87,7 @@ def query_init_df():
         db = SessionLocal()
 
         try:
-            # Exécuter la requête pour récupérer 
+            # Exécuter la requête pour récupérer
             # toutes les lignes de la table ViewRh
             rows = db.query(ViewRh).all()
 
