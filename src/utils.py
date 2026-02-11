@@ -19,10 +19,11 @@ INSERT_FILES = {
     "eval": "./sql/extrait_eval_insert.csv",
     "sondage": "./sql/extrait_sondage_insert.csv",
 }
-TABLES = ["sirh","eval","sondage"]
+TABLES = ["sirh", "eval", "sondage"]
 
 # -------------------------------------------------------
 # Query from Text files
+
 
 def execute_sql_file(conn, file_path):
     with open(file_path, "r", encoding="utf-8") as f:
@@ -30,28 +31,29 @@ def execute_sql_file(conn, file_path):
         conn.execute(text(sql))
     conn.commit()
 
+
+
 # -------------------------------------------------------
 # Select pour vérifier si la table contient du data
-
 def table_is_empty(db, table_name):
-    result =  db.execute(text(f"SELECT COUNT(*) FROM {table_name};"))
+    result = db.execute(text(f"SELECT COUNT(*) FROM {table_name};"))
     # Récupérer la première ligne du résultat avec fetchone()
     count = result.fetchone()[0]
-    
+
     # Retourner si la table est vide (count == 0)
     return count == 0
+
 
 
 # =========================
 # Init de Base des Tables
 # =========================
-
 def create_bd_base():
-    #print("🔌 Test connexion à la base...")
+    # print("🔌 Test connexion à la base...")
     db = SessionLocal()
     db.autocommit = False
     print(CREATE_TABLE_SQL_PATH)
-    try:   
+    try:
 
         # 1. Test table
         execute_sql_file(db, CREATE_TABLE_SQL_PATH)
@@ -79,15 +81,16 @@ def create_bd_base():
     finally:
         db.close()
 
+
+
 # -------------------------------------------------------
 # Lecture du Dataset ------------------------------------
-
-def query_init_df():    
+def query_init_df():
     try:
         # Get session
         db = SessionLocal()
-        
-        try:                     
+
+        try:
             # Exécuter la requête pour récupérer toutes les lignes de la table ViewRh
             rows = db.query(ViewRh).all()
 
@@ -98,8 +101,8 @@ def query_init_df():
             # Convertir les résultats en DataFrame Pandas
             df = pd.DataFrame([r.__dict__ for r in rows])
             # Remove SQLAlchemy internal column if present
-            df = df.drop(columns=['_sa_instance_state'], errors='ignore')
-            
+            df = df.drop(columns=["_sa_instance_state"], errors="ignore")
+
         finally:
             db.close()
     except Exception as e:
@@ -113,11 +116,12 @@ def query_init_df():
 
     return df
 
+
+
 # -------------------------------------------------------
 # Ecriture du Dataset après le split
 
 # Fonction pour insérer un DataFrame dans la table log_split
-
 def insert_data_into_db(df_test: pd.DataFrame, db):
     inputs = []
 
@@ -126,7 +130,10 @@ def insert_data_into_db(df_test: pd.DataFrame, db):
     required_cols = {
         c.name
         for c in TInputs.__table__.columns
-        if not c.nullable and c.default is None and c.server_default is None and c.name not in {"id_input"}
+        if not c.nullable
+        and c.default is None
+        and c.server_default is None
+        and c.name not in {"id_input"}
     }
     print(f"🔍 Colonnes autorisées pour Inputs: {sorted(allowed_cols)}")
     print(f"🔍 Colonnes df entrantes: {sorted(df_test.columns.tolist())}")
@@ -134,7 +141,10 @@ def insert_data_into_db(df_test: pd.DataFrame, db):
     missing_required = sorted(required_cols - set(df_test.columns))
     if missing_required:
         print(f"[ERROR] Missing required columns: {missing_required}")
-        raise ValueError(f"Colonnes requises manquantes pour LogSplit: {missing_required}")
+        raise ValueError(
+            "Colonnes requises manquantes pour LogSplit: "
+            f"{missing_required}"
+        )
 
     # Parcourir chaque ligne du DataFrame
     for _, row in df_test.iterrows():
@@ -157,7 +167,7 @@ def insert_data_into_db(df_test: pd.DataFrame, db):
     # print(f"[INFO] Ready to insert {len(inputs)} rows")
     if inputs:
         sample = inputs[0].__dict__.copy()
-        sample.pop('_sa_instance_state', None)
+        sample.pop("_sa_instance_state", None)
         # print(f"[DEBUG] Sample payload: {sample}")
 
     # Insérer toutes les lignes dans la base de données
@@ -169,8 +179,9 @@ def insert_data_into_db(df_test: pd.DataFrame, db):
         print(f"[ERROR] Flush error: {e}")
         raise
 
-# Fonction principale pour insérer les données
 
+
+# Fonction principale pour insérer les données
 def insert_train_data(df_test: pd.DataFrame):
     db = SessionLocal()
     try:
