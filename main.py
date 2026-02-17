@@ -127,10 +127,15 @@ def health_check():
 
 # Endpoint pour récupérer toutes les données de la table inputs
 @app.get("/inputs")
-def get_all_inputs(db: Session = Depends(get_db)):
+def get_all_inputs(db: Session = Depends(get_db), limit: int = 50, offset: int = 0):
     try:
-        # Récupérer toutes les données de la table inputs
-        inputs = db.query(TInputs).all()
+        # Récupérer les données avec limite
+        inputs = (
+            db.query(TInputs)
+            .offset(offset)
+            .limit(limit)
+            .all()
+        )
         
         if not inputs:
             return {
@@ -176,6 +181,8 @@ def get_all_inputs(db: Session = Depends(get_db)):
         return {
             "message": "Données récupérées avec succès",
             "total": len(inputs_list),
+            "limit": limit,
+            "offset": offset,
             "inputs": inputs_list
         }
     
