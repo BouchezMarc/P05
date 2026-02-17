@@ -88,22 +88,22 @@ python -c "from src.utils import create_bd_base; create_bd_base()"
 
 ```
 projet05_test2/
-├── main.py                 # Point d'entrée de l'application FastAPI
-├── requirements.txt        # Dépendances du projet
+├── main.py                # Point d'entrée de l'application FastAPI
+├── requirements.txt       # Dépendances du projet
 ├── pyproject.toml         # Configuration du projet
 ├── pytest.ini             # Configuration pytest
 ├── Dockerfile             # Pour containerisation Docker
 │
 ├── src/                   # Code source principal
 │   ├── __init__.py
-│   ├── bdd.py            # Configuration base de données SQLAlchemy
-│   ├── models.py         # Modèles Pydantic pour validation
-│   ├── train.py          # Pipeline et entraînement du modèle
-│   ├── predict.py        # Chargement et prédiction
-│   └── utils.py          # Fonctions utilitaires
+│   ├── bdd.py             # Configuration base de données SQLAlchemy
+│   ├── models.py          # Modèles Pydantic pour validation
+│   ├── train.py           # Pipeline et entraînement du modèle
+│   ├── predict.py         # Chargement et prédiction
+│   └── utils.py           # Fonctions utilitaires
 │
 ├── model/                 # Artefacts du modèle
-│   ├── ml_model.joblib   # Modèle sérialisé
+│   ├── ml_model.joblib    # Modèle sérialisé
 │   └── __init__.py
 │
 ├── sql/                   # Scripts SQL
@@ -113,13 +113,13 @@ projet05_test2/
 │   └── extrait_sondage_insert.csv
 │
 ├── test/                  # Suite de tests
-│   ├── conftest.py       # Configuration pytest (fixtures)
-│   ├── test_api.py       # Tests API
-│   ├── test_database.py  # Tests base de données
-│   ├── test_model.py     # Tests modèle ML
-│   └── test_utils.py     # Tests utilitaires
+│   ├── conftest.py        # Configuration pytest (fixtures)
+│   ├── test_api.py        # Tests API
+│   ├── test_database.py   # Tests base de données
+│   ├── test_model.py      # Tests modèle ML
+│   └── test_utils.py      # Tests utilitaires
 │
-└── htmlcov/              # Rapport de couverture de code
+└── htmlcov/               # Rapport de couverture de code
 ```
 
 ## 🔧 Utilisation
